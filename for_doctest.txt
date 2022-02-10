@@ -1,0 +1,16 @@
+CRC: 0xCF86E85D  File: locations.list  Date: Fri Dec 22 00:00:00 2017
+
+Copyright 1991-2017 The Internet Movie Database Ltd. All rights reserved.
+
+http://www.imdb.com
+
+locations.list
+
+2017-12-18
+
+-----------------------------------------------------------------------------
+
+LOCATIONS LIST
+==============
+"#1 Single" (2006)					Los Angeles, California, USA
+==

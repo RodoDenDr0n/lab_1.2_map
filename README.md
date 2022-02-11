@@ -214,4 +214,31 @@ There are also markers with film coordinates that are added in order for user to
 In order for user to have certain control of needed information the layer control was added, so that user can decide for him/herself what he/she wants to be informed about
 
 ## calculate_distance()
-This function takes values of ... calcutes the distance between entered user coordinates and coordinates of where films were taken and chooses the 10 closest to the user's one 
+This function takes values of user coordinates and location coordinates, then calcutes the distance between entered user coordinates and coordinates of where films were taken, and chooses the 10 closest to the user's one and adds them to dictionary
+
+```python
+def calculate_distance(user_coordinates, location_coordinates):
+    <...>
+    return distance_dict
+```
+The sequence of tasks this function performs is next:
+1) calculates distance and appends the tuple with distance, coordinate and film name to the list
+2) sorts the list of elements from the smallest to biggest by distance and chooses the smallest ones
+3) creates dictionary where key is the coordinates where film was taken and value is names of films taken in those coordinates and returns it
+
+## "for_doctest.txt" file purpose
+Beside the file with program itself there is a file which was designed for doctests in the program. It is used in doctests of ```read_data``` and ```create_map``` functions:
+```
+>>> read_data("for_doctest.txt", 2006)
+       Film Name                Coordinates
+    0  #1 Single  (34.0536909, -118.242766)
+
+>>> read_data("for_doctest.txt", 2016)
+Empty DataFrame
+Columns: [Film Name, Coordinates]
+Index: []
+
+>>> create_map(read_data("for_doctest.txt", 2006), (49.83826, 24.02324))
+    ...
+```
+# Good luck exploring my project!

@@ -141,7 +141,7 @@ for i in range(len(locations_list)):  # splits the location sequence into elemen
 
 -- in this way we will be able to get information about the street, town/city, state and country separately, so if we don't manage to find the street, we will look for town/city, state etc.
 
-In order to locate the place, we call the ```locate_place()``` function, which is responsible for finding place ()
+In order to locate the place, we call the ```locate_place()``` function, which is responsible for finding place (see the ```locate_place()``` function explanation):
 ```python
     for i in range(len(locations_list)):  # searches the coordinates of locations
         for j in range(len(locations_list[i])):

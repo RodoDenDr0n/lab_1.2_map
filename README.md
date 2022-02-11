@@ -228,7 +228,7 @@ The sequence of tasks this function performs is next:
 
 ## "for_doctest.txt" file purpose
 Beside the file with program itself there is a file which was designed for doctests in the program. It is used in doctests of ```read_data``` and ```create_map``` functions:
-```
+```python
 >>> read_data("for_doctest.txt", 2006)
        Film Name                Coordinates
     0  #1 Single  (34.0536909, -118.242766)

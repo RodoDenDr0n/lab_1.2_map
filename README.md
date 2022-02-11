@@ -7,19 +7,31 @@ The goal of the project was to create a map with a couple of layers of markers, 
   - marker clusters, which would show the number of places in certain area
 
 Every layer of markers may be controlled trough the layer control, which may be found in the upper right corner of the map. This project is designed for people who are keen to watch films and want to find out more about films that were filmed around their homeplace or place of interest.
+
 ## Coded functions
 There is a number of functions that were coded to complete the project. All in all there are 7 functions:
 
 ``` python
+main()
 argumnet_parsing()
 read_data()
 location_identifier()
 locate_place()
-calculate_distance()
 create_map()
-main()
+calculate_distance()
 ```
 In order to understand the way project works we need to understand what each function is responsible for.
+
+## main()
+The main function that contains the whole program. This function is responsible to trasmit data entered by user to functions
+
+```python
+def main():
+    user_year, latitude, longitude, path_to_dataset = argument_parsing()
+    user_coordinates = (latitude, longitude)
+    dataframe = read_data(path_to_dataset, user_year)
+    create_map(dataframe, user_coordinates)
+```
 
 ## argumnet_parsing()
 This function is responsible for parsing the inforamtion about year, when film was taken in, latitude and longitude around which 10 closest locations of filming will be found, path to film's data and returning it.
@@ -154,3 +166,52 @@ In order to locate the place, we call the ```locate_place()``` function, which i
                 lines_list[i].append((place_coordinates[0], place_coordinates[1]))  # appends coordinates of location
                 break
 ```
+
+If the place is found the cycle breaks, if not - it continues until found
+
+## locate_place()
+This function takes the name of place, coordinates of which need to be found, and if the place is found returns the latitude and longitude of the place, else it's retuns None
+
+```python
+def locate_place(place):
+
+    place_locator = Nominatim(user_agent="place_locator")
+
+    try:  # if place is not found rises exception
+        location = place_locator.geocode(place)
+    except:
+        location = None
+
+    if location is None:  # if location exists returns coordinates
+        return None
+    else:
+        return location.latitude, location.longitude
+```
+
+## create_map()
+This function takes the dataframe and user coordinates merged in the ```main()``` function, creates the map with the zoom on user's coordinates, places markers, shows marker clusters and adds layer control.
+
+```python
+def create_map(dataframe, user_coordinates):
+    <...>
+    feature_group = folium.FeatureGroup(name="Films Location")
+    location_feature_group = folium.FeatureGroup(name="Location Coordinates")
+    <...>
+    distance_dict = calculate_distance(user_coordinates, film_names_by_coordinates_dict)
+
+    locations = list(distance_dict.keys())  # list of coordinates
+    marker_cluster = MarkerCluster(locations, name="Marker Cluster")  # creates marker cluster
+    marked_map.add_child(marker_cluster)  # adds marker cluster to map
+    <...>
+    marked_map.add_child(feature_group)  # adds feature group with film names
+    marked_map.add_child(location_feature_group)  # adds feature group with location coordinates
+    marked_map.add_child(folium.LayerControl())  # adds the ability to control layers
+    marked_map.save('Map_1.html')  # saves map
+```
+
+This function also calls the ```calculate_distance()``` function (see ```calculate_distance()``` function description) and adds markers with film names filmed in that location.
+There are also markers with film coordinates that are added in order for user to know the exact location of the town/city if it is necessary. 
+In order for user to have certain control of needed information the layer control was added, so that user can decide for him/herself what he/she wants to be informed about
+
+## calculate_distance()
+This function takes values of ... calcutes the distance between entered user coordinates and coordinates of where films were taken and chooses the 10 closest to the user's one 
